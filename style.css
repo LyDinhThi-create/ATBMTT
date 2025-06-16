@@ -1,0 +1,42 @@
+body {
+      background-color: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+    }
+    .navbar-brand {
+      font-weight: bold;
+    }
+    .content-section {
+      margin-top: 20px;
+    }
+    .card {
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .hidden {
+      display: none;
+    }
+    .project-list, .report-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .alert {
+      margin-top: 10px;
+    }
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .search-bar {
+      max-width: 300px;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    .modal-content {
+      border-radius: 10px;
+    }
+    .btn-icon {
+      margin-right: 5px;
+    }
