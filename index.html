@@ -1,354 +1,540 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quản Lý Đề Tài Khoa Học Công Nghệ</title>
-  <!-- Bootstrap 4 CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Font Awesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Quản Lý Đề Tài</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <span class="navbar-text mr-3" id="currentUser"></span>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Lý Đề Tài Khoa Học Công Nghệ</title>
+    <!-- Bootstrap 4 CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">Quản Lý Đề Tài</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <span class="navbar-text mr-3" id="currentUser"></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="logoutLink"
+              ><i class="fas fa-sign-out-alt"></i> Đăng xuất</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-  <!-- Login Section -->
-  <div class="container content-section" id="loginSection">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Đăng nhập</div>
-          <div class="card-body">
-            <form id="loginForm">
-              <div class="form-group">
-                <label for="username">Tên đăng nhập</label>
-                <input type="text" class="form-control" id="username" required>
-              </div>
-              <div class="form-group">
-                <label for="password">Mật khẩu</label>
-                <input type="password" class="form-control" id="password" required>
-              </div>
-              <div class="form-group">
-                <label for="role">Vai trò</label>
-                <select class="form-control" id="role">
-                  <option value="student">Sinh viên</option>
-                  <option value="instructor">Giảng viên</option>
-                  <option value="admin">Quản trị viên</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Đăng nhập</button>
-              <button type="button" class="btn btn-link" id="showRegister">Đăng ký (Sinh viên)</button>
-            </form>
-            <div id="loginError" class="alert alert-danger hidden"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Register Section -->
-  <div class="container content-section hidden" id="registerSection">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Đăng ký Sinh viên</div>
-          <div class="card-body">
-            <form id="registerForm">
-              <div class="form-group">
-                <label for="regUsername">Tên đăng nhập</label>
-                <input type="text" class="form-control" id="regUsername" required>
-              </div>
-              <div class="form-group">
-                <label for="regPassword">Mật khẩu</label>
-                <input type="password" class="form-control" id="regPassword" required>
-              </div>
-              <div class="form-group">
-                <label for="regName">Họ và tên</label>
-                <input type="text" class="form-control" id="regName" required>
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> Đăng ký</button>
-              <button type="button" class="btn btn-link" id="backToLogin">Quay lại đăng nhập</button>
-            </form>
-            <div id="registerError" class="alert alert-danger hidden"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Student Dashboard -->
-  <div class="container content-sectionsection hidden" id="studentSection">
-    <div class="dashboard-header">
-      <h2>Trang Sinh Viên</h2>
-      <input type="text" class="form-control search-bar" id="studentProjectSearch" placeholder="Tìm kiếm đề tài...">
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Danh sách đề tài</div>
-          <div class="card-body project-list">
-            <ul class="list-group" id="projectList"></ul>
-            <button class="btn btn-primary mt-3" data-toggle="modal" data-target="#proposeProjectModal"><i class="fas fa-plus"></i> Đề xuất đề tài</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Trạng thái đề tài</div>
-          <div class="card-body" id="projectStatus"></div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Nộp báo cáo</div>
-          <div class="card-body">
-            <form id="submitReportForm">
-              <div class="form-group">
-                <label for="reportProjectId">Đề tài</label>
-                <select class="form-control" id="reportProjectId"></select>
-              </div>
-              <div class="form-group">
-                <label for="reportFile">Chọn file báo cáo</label>
-                <input type="file" class="form-control-file" id="reportFile">
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Nộp báo cáo</button>
-            </form>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Lịch hẹn</div>
-          <div class="card-body" id="studentAppointments"></div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Nhận xét từ giảng viên</div>
-          <div class="card-body" id="instructorFeedback"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Instructor Dashboard -->
-  <div class="container content-section hidden" id="instructorSection">
-    <div class="dashboard-header">
-      <h2>Trang Giảng Viên</h2>
-      <input type="text" class="form-control search-bar" id="instructorProjectSearch" placeholder="Tìm kiếm đề tài...">
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Danh sách đề tài được phân công</div>
-          <div class="card-body project-list" id="instructorProjectList"></div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Báo cáo của sinh viên</div>
-          <div class="card-body report-list" id="studentReports"></div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Duyệt đề tài</div>
-          <div class="card-body" id="pendingProjects"></div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Đặt lịch hẹn</div>
-          <div class="card-body">
-            <form id="scheduleAppointmentForm">
-              <div class="form-group">
-                <label for="studentId">Sinh viên</label>
-                <select class="form-control" id="studentId"></select>
-              </div>
-              <div class="form-group">
-                <label for="appointmentTime">Thời gian</label>
-                <input type="datetime-local" class="form-control" id="appointmentTime" required>
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Đặt lịch</button>
-            </form>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Gửi nhận xét</div>
-          <div class="card-body">
-            <form id="submitFeedbackForm">
-              <div class="form-group">
-                <label for="feedbackStudentId">Sinh viên</label>
-                <select class="form-control" id="feedbackStudentId"></select>
-              </div>
-              <div class="form-group">
-                <label for="feedbackText">Nhận xét</label>
-                <textarea class="form-control" id="feedbackText" row="4" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-comment"></i> Gửi nhận xét</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Admin Dashboard -->
-  <div class="container content-section hidden" id="adminSection">
-    <h2>Trang Quản Trị Viên</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Quản lý tài khoản</div>
-          <div class="card-body">
-            <form id="manageAccountForm">
-              <div class="form-group">
-                <label for="accountUsername">Tên đăng nhập</label>
-                <input type="text" class="form-control" id="accountUsername" required>
-              </div>
-              <div class="form-group">
-                <label for="accountPassword">Mật khẩu</label>
-                <input type="password" class="form-control" id="accountPassword" required>
-              </div>
-              <div class="form-group">
-                <label for="accountRole">Vai trò</label>
-                <select class="form-control" id="accountRole">
-                  <option value="student">Sinh viên</option>
-                  <option value="instructor">Giảng viên</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> Tạo tài khoản</button>
-            </form>
-            <table class="table mt-3">
-              <thead>
-                <tr>
-                  <th>Tên đăng nhập</th>
-                  <th>Họ tên</th>
-                  <th>Vai trò</th>
-                </tr>
-              </thead>
-              <tbody id="userList"></tbody>
-            </table>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Tạo đề tài</div>
-          <div class="card-body">
-            <form id="createProjectForm">
-              <div class="form-group">
-                <label for="projectTitle">Tên đề tài</label>
-                <input type="text" class="form-control" id="projectTitle" required>
-              </div>
-              <div class="form-group">
-                <label for="projectDescription">Mô tả</label>
-                <textarea class="form-control" id="projectDescription" rows="4" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Tạo đề tài</button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header bg-primary text-white">Phân công giảng viên</div>
-          <div class="card-body">
-            <form id="assignInstructorForm">
-              <div class="form-group">
-                <label for="assignProjectId">Đề tài</label>
-                <select class="form-control" id="assignProjectId"></select>
-              </div>
-              <div class="form-group">
-                <label for="assignInstructorId">Giảng viên</label>
-                <select class="form-control" id="assignInstructorId"></select>
-              </div>
-              <button type="submit" class="btn btn-primary"><i class="fas fa-user-tie"></i> Phân công</button>
-            </form>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header bg-primary text-white">Thống kê</div>
-          <div class="card-body" id="statistics">
-            <p>Số lượng đề tài: <span id="totalProjects">0</span></p>
-            <p>Số lượng sinh viên: <span id="totalStudents">0</span></p>
-            <p>Số lượng giảng viên: <span id="totalInstructors">0</span></p>
-            <p>Đề tài đã duyệt: <span id="approvedProjects">0</span></p>
-            <p>Đề tài đang chờ duyệt: <span id="pendingProjectsCount">0</span></p>
-            <canvas id="statusChart" width="400" height="200"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal for Proposing Project -->
-  <div class="modal fade" id="proposeProjectModal" tabindex="-1" aria-labelledby="proposeProjectModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="proposeProjectModalLabel">Đề xuất đề tài</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="proposeProjectForm">
-            <div class="form-group">
-              <label for="proposeTitle">Tên đề tài</label>
-              <input type="text" class="form-control" id="proposeTitle" required>
+    <!-- Login Section -->
+    <div class="container content-section" id="loginSection">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">Đăng nhập</div>
+            <div class="card-body">
+              <form id="loginForm">
+                <div class="form-group">
+                  <label for="username">Tên đăng nhập</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="password">Mật khẩu</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="role">Vai trò</label>
+                  <select class="form-control" id="role">
+                    <option value="student">Sinh viên</option>
+                    <option value="instructor">Giảng viên</option>
+                    <option value="admin">Quản trị viên</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-sign-in-alt"></i> Đăng nhập
+                </button>
+                <button type="button" class="btn btn-link" id="showRegister">
+                  Đăng ký (Sinh viên)
+                </button>
+              </form>
+              <div id="loginError" class="alert alert-danger hidden"></div>
             </div>
-            <div class="form-group">
-              <label for="proposeDescription">Mô tả</label>
-              <textarea class="form-control" id="proposeDescription" rows="4" required></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Section -->
+    <div class="container content-section hidden" id="registerSection">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Đăng ký Sinh viên
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-          <button type="submit" form="proposeProjectForm" class="btn btn-primary"><i class="fas fa-plus"></i> Gửi đề xuất</button>
+            <div class="card-body">
+              <form id="registerForm">
+                <div class="form-group">
+                  <label for="regUsername">Tên đăng nhập</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="regUsername"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="regPassword">Mật khẩu</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="regPassword"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="regName">Họ và tên</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="regName"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-user-plus"></i> Đăng ký
+                </button>
+                <button type="button" class="btn btn-link" id="backToLogin">
+                  Quay lại đăng nhập
+                </button>
+              </form>
+              <div id="registerError" class="alert alert-danger hidden"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Modal for Project Details -->
-  <div class="modal fade" id="projectDetailsModal" tabindex="-1" aria-labelledby="projectDetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="projectDetailsModalLabel">Chi tiết đề tài</h5>
-          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+    <!-- Student Dashboard -->
+    <div class="container content-section hidden" id="studentSection">
+      <div class="dashboard-header">
+        <h2>Trang Sinh Viên</h2>
+        <input
+          type="text"
+          class="form-control search-bar"
+          id="studentProjectSearch"
+          placeholder="Tìm kiếm đề tài..."
+        />
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Danh sách đề tài
+            </div>
+            <div class="card-body project-list">
+              <ul class="list-group" id="projectList"></ul>
+              <button
+                class="btn btn-primary mt-3"
+                data-toggle="modal"
+                data-target="#proposeProjectModal"
+              >
+                <i class="fas fa-plus"></i> Đề xuất đề tài
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <h6>Tên đề tài</h6>
-          <p id="projectDetailTitle"></p>
-          <h6>Mô tả</h6>
-          <p id="projectDetailDescription"></p>
-          <h6>Trạng thái</h6>
-          <p id="projectDetailStatus"></p>
-          <h6>Sinh viên</h6>
-          <p id="projectDetailStudent"></p>
-          <h6>Giảng viên hướng dẫn</h6>
-          <p id="projectDetailInstructor"></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Trạng thái đề tài
+            </div>
+            <div class="card-body" id="projectStatus"></div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-primary text-white">Nộp báo cáo</div>
+            <div class="card-body">
+              <form id="submitReportForm">
+                <div class="form-group">
+                  <label for="reportProjectId">Đề tài</label>
+                  <select class="form-control" id="reportProjectId"></select>
+                </div>
+                <div class="form-group">
+                  <label for="reportFile">Chọn file báo cáo</label>
+                  <input
+                    type="file"
+                    class="form-control-file"
+                    id="reportFile"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-upload"></i> Nộp báo cáo
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-primary text-white">Lịch hẹn</div>
+            <div class="card-body" id="studentAppointments"></div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Nhận xét từ giảng viên
+            </div>
+            <div class="card-body" id="instructorFeedback"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- JavaScript Dependencies -->
-   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-  <script src="01.js"> </script>
-</body>
+    <!-- Instructor Dashboard -->
+    <div class="container content-section hidden" id="instructorSection">
+      <div class="dashboard-header">
+        <h2>Trang Giảng Viên</h2>
+        <input
+          type="text"
+          class="form-control search-bar"
+          id="instructorProjectSearch"
+          placeholder="Tìm kiếm đề tài..."
+        />
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Danh sách đề tài được phân công
+            </div>
+            <div
+              class="card-body project-list"
+              id="instructorProjectList"
+            ></div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Báo cáo của sinh viên
+            </div>
+            <div class="card-body report-list" id="studentReports"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">Duyệt đề tài</div>
+            <div class="card-body" id="pendingProjects"></div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-primary text-white">Đặt lịch hẹn</div>
+            <div class="card-body">
+              <form id="scheduleAppointmentForm">
+                <div class="form-group">
+                  <label for="studentId">Sinh viên</label>
+                  <select class="form-control" id="studentId"></select>
+                </div>
+                <div class="form-group">
+                  <label for="appointmentTime">Thời gian</label>
+                  <input
+                    type="datetime-local"
+                    class="form-control"
+                    id="appointmentTime"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-calendar-plus"></i> Đặt lịch
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-primary text-white">Gửi nhận xét</div>
+            <div class="card-body">
+              <form id="submitFeedbackForm">
+                <div class="form-group">
+                  <label for="feedbackStudentId">Sinh viên</label>
+                  <select class="form-control" id="feedbackStudentId"></select>
+                </div>
+                <div class="form-group">
+                  <label for="feedbackText">Nhận xét</label>
+                  <textarea
+                    class="form-control"
+                    id="feedbackText"
+                    row="4"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-comment"></i> Gửi nhận xét
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="container content-section hidden" id="adminSection">
+      <h2>Trang Quản Trị Viên</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Quản lý tài khoản
+            </div>
+            <div class="card-body">
+              <form id="manageAccountForm">
+                <div class="form-group">
+                  <label for="accountUsername">Tên đăng nhập</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="accountUsername"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="accountPassword">Mật khẩu</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="accountPassword"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="accountRole">Vai trò</label>
+                  <select class="form-control" id="accountRole">
+                    <option value="student">Sinh viên</option>
+                    <option value="instructor">Giảng viên</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-user-plus"></i> Tạo tài khoản
+                </button>
+              </form>
+              <table class="table mt-3">
+                <thead>
+                  <tr>
+                    <th>Tên đăng nhập</th>
+                    <th>Họ tên</th>
+                    <th>Vai trò</th>
+                  </tr>
+                </thead>
+                <tbody id="userList"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header bg-primary text-white">Tạo đề tài</div>
+            <div class="card-body">
+              <form id="createProjectForm">
+                <div class="form-group">
+                  <label for="projectTitle">Tên đề tài</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="projectTitle"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="projectDescription">Mô tả</label>
+                  <textarea
+                    class="form-control"
+                    id="projectDescription"
+                    rows="4"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-plus"></i> Tạo đề tài
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              Phân công giảng viên
+            </div>
+            <div class="card-body">
+              <form id="assignInstructorForm">
+                <div class="form-group">
+                  <label for="assignProjectId">Đề tài</label>
+                  <select class="form-control" id="assignProjectId"></select>
+                </div>
+                <div class="form-group">
+                  <label for="assignInstructorId">Giảng viên</label>
+                  <select class="form-control" id="assignInstructorId"></select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-user-tie"></i> Phân công
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-header bg-primary text-white">Thống kê</div>
+            <div class="card-body" id="statistics">
+              <p>Số lượng đề tài: <span id="totalProjects">0</span></p>
+              <p>Số lượng sinh viên: <span id="totalStudents">0</span></p>
+              <p>Số lượng giảng viên: <span id="totalInstructors">0</span></p>
+              <p>Đề tài đã duyệt: <span id="approvedProjects">0</span></p>
+              <p>
+                Đề tài đang chờ duyệt: <span id="pendingProjectsCount">0</span>
+              </p>
+              <canvas id="statusChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Proposing Project -->
+    <div
+      class="modal fade"
+      id="proposeProjectModal"
+      tabindex="-1"
+      aria-labelledby="proposeProjectModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="proposeProjectModalLabel">
+              Đề xuất đề tài
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="proposeProjectForm">
+              <div class="form-group">
+                <label for="proposeTitle">Tên đề tài</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="proposeTitle"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="proposeDescription">Mô tả</label>
+                <textarea
+                  class="form-control"
+                  id="proposeDescription"
+                  rows="4"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Đóng
+            </button>
+            <button
+              type="submit"
+              form="proposeProjectForm"
+              class="btn btn-primary"
+            >
+              <i class="fas fa-plus"></i> Gửi đề xuất
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Project Details -->
+    <div
+      class="modal fade"
+      id="projectDetailsModal"
+      tabindex="-1"
+      aria-labelledby="projectDetailsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="projectDetailsModalLabel">
+              Chi tiết đề tài
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h6>Tên đề tài</h6>
+            <p id="projectDetailTitle"></p>
+            <h6>Mô tả</h6>
+            <p id="projectDetailDescription"></p>
+            <h6>Trạng thái</h6>
+            <p id="projectDetailStatus"></p>
+            <h6>Sinh viên</h6>
+            <p id="projectDetailStudent"></p>
+            <h6>Giảng viên hướng dẫn</h6>
+            <p id="projectDetailInstructor"></p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="01.js"></script>
+  </body>
 </html>
